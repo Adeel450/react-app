@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v1
         with:
           node-version: 14 # Change to your desired Node.js version
 
@@ -24,14 +24,14 @@ jobs:
       - name: Build React App
         run: npm run build
 
-      - name: Configure AWS CLI
+      - name:  Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: <YOUR_AWS_REGION>
+          aws-region: us-east-1
 
       - name: Upload to S3 Bucket
-        run: |
-          aws s3 sync build/ s3://react-app11--delete
+        run:  aws s3 sync . s3://react-app11 --delete
+         
 
